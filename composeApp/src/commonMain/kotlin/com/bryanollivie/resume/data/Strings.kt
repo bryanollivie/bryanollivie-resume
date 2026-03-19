@@ -146,7 +146,8 @@ object Strings {
             CertificationStrings("2024", "Segurança da Informação", "Itaú Unibanco"),
             CertificationStrings("2023", "AWS Certified Cloud Practitioner (CLF-01)", "Amazon"),
             CertificationStrings("2020", "Scrum Master Professional Certificate (SMPC)", "CertiProf"),
-            CertificationStrings("2016", "iOS Developer", "Udemy")
+            CertificationStrings("2016", "iOS Developer", "Udemy"),
+            CertificationStrings("2014", "Android Developer", "Institute of Interactive Arts (IAI)")
         ),
         languageList = listOf(
             LanguageStrings("Portuguese", "Native or Bilingual"),
@@ -234,7 +235,8 @@ object Strings {
             CertificationStrings("2024", "Segurança da Informação", "Itaú Unibanco"),
             CertificationStrings("2023", "AWS Certified Cloud Practitioner (CLF-01)", "Amazon"),
             CertificationStrings("2020", "Scrum Master Professional Certificate (SMPC)", "CertiProf"),
-            CertificationStrings("2016", "iOS Developer", "Udemy")
+            CertificationStrings("2016", "iOS Developer", "Udemy"),
+            CertificationStrings("2014", "Desenvolvedor Android", "Instituto de Artes Interativas (IAI)")
         ),
         languageList = listOf(
             LanguageStrings("Português", "Nativo ou Bilíngue"),

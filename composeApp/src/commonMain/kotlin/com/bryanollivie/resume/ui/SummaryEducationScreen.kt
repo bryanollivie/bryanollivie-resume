@@ -24,7 +24,8 @@ fun SummaryEducationScreen() {
 
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.spacedBy(Spacing.dp16)
+        contentPadding = PaddingValues(bottom = 56.dp),
+        verticalArrangement = Arrangement.spacedBy(Spacing.dp8)
     ) {
         // Header full-width
         item {
@@ -32,11 +33,11 @@ fun SummaryEducationScreen() {
                 modifier = Modifier
                     .fillMaxWidth()
                     .background(ResumeColors.Black)
-                    .padding(horizontal = Spacing.dp24, vertical = Spacing.dp32),
+                    .padding(horizontal = Spacing.dp16, vertical = Spacing.dp16),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                ProfileAvatar(size = 100.dp)
-                Spacer(modifier = Modifier.height(Spacing.dp16))
+                ProfileAvatar(size = 90.dp)
+                Spacer(modifier = Modifier.height(Spacing.dp8))
                 Text(
                     text = info.name,
                     style = MaterialTheme.typography.headlineMedium,
@@ -50,7 +51,7 @@ fun SummaryEducationScreen() {
                     color = ResumeColors.Primary,
                     fontWeight = FontWeight.Bold
                 )
-                Spacer(modifier = Modifier.height(Spacing.dp12))
+                Spacer(modifier = Modifier.height(Spacing.dp6))
                 Text(
                     text = info.address,
                     style = MaterialTheme.typography.bodySmall,
@@ -61,9 +62,9 @@ fun SummaryEducationScreen() {
                     style = MaterialTheme.typography.bodySmall,
                     color = ResumeColors.White.copy(alpha = 0.7f)
                 )
-                Spacer(modifier = Modifier.height(Spacing.dp16))
+                Spacer(modifier = Modifier.height(Spacing.dp10))
                 Row(
-                    horizontalArrangement = Arrangement.spacedBy(Spacing.dp16),
+                    horizontalArrangement = Arrangement.spacedBy(Spacing.dp12),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     AnimatedLottieButton(
@@ -93,7 +94,7 @@ fun SummaryEducationScreen() {
         item {
             SectionCard(
                 title = strings.summary,
-                modifier = Modifier.padding(horizontal = Spacing.dp16)
+                modifier = Modifier.padding(horizontal = Spacing.dp6)
             ) {
                 Text(
                     text = strings.summaryText,
@@ -106,7 +107,7 @@ fun SummaryEducationScreen() {
         item {
             SectionCard(
                 title = strings.languages,
-                modifier = Modifier.padding(horizontal = Spacing.dp16)
+                modifier = Modifier.padding(horizontal = Spacing.dp6)
             ) {
                 Column(verticalArrangement = Arrangement.spacedBy(Spacing.dp12)) {
                     strings.languageList.forEach { lang ->
@@ -136,7 +137,7 @@ fun SummaryEducationScreen() {
                 title = strings.education,
                 modifier = Modifier
                     .padding(horizontal = Spacing.dp16)
-                    .padding(bottom = Spacing.dp16)
+                    .padding(bottom = Spacing.dp8)
             ) {
                 Column(verticalArrangement = Arrangement.spacedBy(Spacing.dp16)) {
                     strings.educationList.forEach { edu ->

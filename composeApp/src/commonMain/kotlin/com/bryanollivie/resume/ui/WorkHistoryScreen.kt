@@ -21,7 +21,7 @@ fun WorkHistoryScreen() {
 
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
-        contentPadding = PaddingValues(Spacing.dp16),
+        contentPadding = PaddingValues(start = Spacing.dp6, end = Spacing.dp6, top = Spacing.dp16, bottom = 56.dp),
         verticalArrangement = Arrangement.spacedBy(Spacing.dp16)
     ) {
         item {

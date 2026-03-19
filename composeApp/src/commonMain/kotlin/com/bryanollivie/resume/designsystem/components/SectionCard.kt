@@ -22,7 +22,7 @@ fun SectionCard(
 ) {
     Card(
         modifier = modifier.fillMaxWidth(),
-        shape = ResumeShapes.XLarge,
+        shape = ResumeShapes.Medium,
         colors = CardDefaults.cardColors(containerColor = ResumeColors.Surface),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
     ) {
