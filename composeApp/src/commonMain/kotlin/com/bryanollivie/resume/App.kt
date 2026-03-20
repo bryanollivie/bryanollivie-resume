@@ -43,6 +43,7 @@ import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import com.bryanollivie.resume.ui.SummaryEducationScreen
 import com.bryanollivie.resume.ui.TrainingCertificationScreen
+import com.bryanollivie.resume.ui.UtilsDemoScreen
 import com.bryanollivie.resume.ui.WorkHistoryScreen
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -85,7 +86,8 @@ private fun MainContent() {
         val tabs = listOf(
             TabItem(strings.tabSummary, Icons.Default.Person),
             TabItem(strings.tabWorkHistory, Icons.Default.DateRange),
-            TabItem(strings.tabCertifications, Icons.Default.Star)
+            TabItem(strings.tabCertifications, Icons.Default.Star),
+            TabItem(strings.tabUtils, Icons.Default.Build)
         )
 
         ModalNavigationDrawer(
@@ -131,6 +133,7 @@ private fun MainContent() {
                         0 -> SummaryEducationScreen()
                         1 -> WorkHistoryScreen()
                         2 -> TrainingCertificationScreen()
+                        3 -> UtilsDemoScreen()
                     }
 
                     TransparentTabBar(

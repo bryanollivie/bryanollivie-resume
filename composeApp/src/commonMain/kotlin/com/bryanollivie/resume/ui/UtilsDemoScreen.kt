@@ -22,7 +22,13 @@ import com.bryanollivie.resume.designsystem.components.SectionCard
 import com.bryanollivie.resume.designsystem.tokens.ResumeColors
 import com.bryanollivie.resume.designsystem.tokens.Spacing
 import com.bryanollivie.kmputils.*
+import androidx.compose.foundation.Image
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.sp
+import bryanresume.composeapp.generated.resources.Res
+import bryanresume.composeapp.generated.resources.profile
+import org.jetbrains.compose.resources.imageResource
 
 @Composable
 private fun Desc(en: String, pt: String) {
@@ -63,6 +69,7 @@ fun UtilsDemoScreen() {
         item { DebounceSection() }
         item { RetrySection() }
         item { EventBusSection() }
+        item { ImageSection() }
         item { HapticSection(lang) }
     }
 }
@@ -285,62 +292,147 @@ private fun ClipboardSection(lang: AppLanguage) {
 @Composable
 private fun DateSection(lang: AppLanguage) {
     val now = DateUtils.now()
+    val langStr = if (lang == AppLanguage.PT) "pt" else "en"
 
     SectionCard(title = "Date Utils", modifier = Modifier.padding(horizontal = Spacing.dp2)) {
-        Desc("Format dates in multiple patterns and display relative time (e.g. '2 hours ago').", "Formata datas em vários padrões e exibe tempo relativo (ex: 'há 2 horas').")
-        val patterns = listOf("dd/MM/yyyy", "MM-dd-yyyy", "yyyy-MM-dd", "dd/MM/yyyy HH:mm:ss")
+        Desc(
+            "50+ date functions: format, relative time, diff, add/subtract, checks, ranges, countdown, and more.",
+            "50+ funções de data: formatação, tempo relativo, diferença, adicionar/subtrair, verificações, ranges, contagem regressiva e mais."
+        )
+
+        // Format
+        Text("Format", style = MaterialTheme.typography.labelLarge, fontWeight = FontWeight.Bold)
+        Spacer(modifier = Modifier.height(Spacing.dp4))
+        val patterns = listOf(
+            "dd/MM/yyyy", "yyyy-MM-dd", "dd/MM/yyyy HH:mm:ss",
+            "EEEE, dd MMMM yyyy", "EEE dd MMM", "hh:mm a"
+        )
         patterns.forEach { pattern ->
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
+            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
                 Text(pattern, style = MaterialTheme.typography.bodySmall, color = ResumeColors.SecondaryText)
-                Text(
-                    DateUtils.formatDate(now, pattern),
-                    style = MaterialTheme.typography.bodyMedium,
-                    fontWeight = FontWeight.Bold
-                )
+                Text(DateUtils.formatDate(now, pattern), style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Bold)
             }
-            Spacer(modifier = Modifier.height(Spacing.dp4))
         }
 
         Spacer(modifier = Modifier.height(Spacing.dp8))
-        Text(
-            text = "Relative Time",
-            style = MaterialTheme.typography.labelLarge,
-            fontWeight = FontWeight.Bold
-        )
-        Spacer(modifier = Modifier.height(Spacing.dp4))
+        HorizontalDivider(color = ResumeColors.Divider)
+        Spacer(modifier = Modifier.height(Spacing.dp8))
 
-        val langStr = if (lang == AppLanguage.PT) "pt" else "en"
-        val examples = listOf(
-            now - 30_000L to "30s",
-            now - 300_000L to "5min",
-            now - 7_200_000L to "2h",
-            now - 172_800_000L to "2d"
+        // Relative time
+        Text("Relative Time", style = MaterialTheme.typography.labelLarge, fontWeight = FontWeight.Bold)
+        Spacer(modifier = Modifier.height(Spacing.dp4))
+        val relativeExamples = listOf(
+            now - 30_000L to "30s ago",
+            now - 300_000L to "5min ago",
+            now - 7_200_000L to "2h ago",
+            now - 172_800_000L to "2d ago",
+            now + 3_600_000L to "+1h future"
         )
-        examples.forEach { (millis, label) ->
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
+        relativeExamples.forEach { (millis, label) ->
+            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
                 Text(label, style = MaterialTheme.typography.bodySmall, color = ResumeColors.SecondaryText)
-                Text(
-                    DateUtils.relativeTime(millis, now, langStr),
-                    style = MaterialTheme.typography.bodyMedium,
-                    fontWeight = FontWeight.Bold
-                )
+                Text(DateUtils.relativeTime(millis, now, langStr), style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Bold)
             }
         }
+
+        Spacer(modifier = Modifier.height(Spacing.dp8))
+        HorizontalDivider(color = ResumeColors.Divider)
+        Spacer(modifier = Modifier.height(Spacing.dp8))
+
+        // Info
+        Text("Current Info", style = MaterialTheme.typography.labelLarge, fontWeight = FontWeight.Bold)
+        Spacer(modifier = Modifier.height(Spacing.dp4))
+        listOf(
+            (if (lang == AppLanguage.PT) "Dia da semana" else "Day of week") to DateUtils.dayOfWeekName(now, langStr),
+            (if (lang == AppLanguage.PT) "Mês" else "Month") to DateUtils.monthName(now, langStr),
+            (if (lang == AppLanguage.PT) "Dia do ano" else "Day of year") to DateUtils.dayOfYear(now).toString(),
+            (if (lang == AppLanguage.PT) "Semana do ano" else "Week of year") to DateUtils.weekOfYear(now).toString(),
+            "ISO 8601" to DateUtils.toIso8601(now),
+            "Unix" to DateUtils.toUnixTimestamp(now).toString(),
+            (if (lang == AppLanguage.PT) "Fim de semana?" else "Weekend?") to if (DateUtils.isWeekend(now)) "Yes" else "No",
+            (if (lang == AppLanguage.PT) "Ano bissexto?" else "Leap year?") to if (DateUtils.isLeapYear(DateUtils.currentDateTime().year)) "Yes" else "No",
+            (if (lang == AppLanguage.PT) "Dias no mês" else "Days in month") to DateUtils.daysInMonth(DateUtils.currentDateTime().year, DateUtils.currentDateTime().monthNumber).toString()
+        ).forEach { (label, value) ->
+            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+                Text(label, style = MaterialTheme.typography.bodySmall, color = ResumeColors.SecondaryText)
+                Text(value, style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Bold)
+            }
+        }
+
+        Spacer(modifier = Modifier.height(Spacing.dp8))
+        HorizontalDivider(color = ResumeColors.Divider)
+        Spacer(modifier = Modifier.height(Spacing.dp8))
+
+        // Add/Subtract
+        Text("Add/Subtract", style = MaterialTheme.typography.labelLarge, fontWeight = FontWeight.Bold)
+        Spacer(modifier = Modifier.height(Spacing.dp4))
+        listOf(
+            "+7 days" to DateUtils.formatDate(DateUtils.addDays(now, 7)),
+            "-30 days" to DateUtils.formatDate(DateUtils.addDays(now, -30)),
+            "+3 months" to DateUtils.formatDate(DateUtils.addMonths(now, 3)),
+            "+1 year" to DateUtils.formatDate(DateUtils.addYears(now, 1)),
+            "+5 hours" to DateUtils.formatDate(DateUtils.addHours(now, 5), "HH:mm:ss")
+        ).forEach { (label, value) ->
+            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+                Text(label, style = MaterialTheme.typography.bodySmall, color = ResumeColors.SecondaryText)
+                Text(value, style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Bold)
+            }
+        }
+
+        Spacer(modifier = Modifier.height(Spacing.dp8))
+        HorizontalDivider(color = ResumeColors.Divider)
+        Spacer(modifier = Modifier.height(Spacing.dp8))
+
+        // Range
+        Text("Range", style = MaterialTheme.typography.labelLarge, fontWeight = FontWeight.Bold)
+        Spacer(modifier = Modifier.height(Spacing.dp4))
+        listOf(
+            (if (lang == AppLanguage.PT) "Início do dia" else "Start of day") to DateUtils.formatDate(DateUtils.startOfDay(now), "HH:mm:ss"),
+            (if (lang == AppLanguage.PT) "Fim do dia" else "End of day") to DateUtils.formatDate(DateUtils.endOfDay(now), "HH:mm:ss"),
+            (if (lang == AppLanguage.PT) "Início do mês" else "Start of month") to DateUtils.formatDate(DateUtils.startOfMonth(now)),
+            (if (lang == AppLanguage.PT) "Fim do mês" else "End of month") to DateUtils.formatDate(DateUtils.endOfMonth(now)),
+            (if (lang == AppLanguage.PT) "Início do ano" else "Start of year") to DateUtils.formatDate(DateUtils.startOfYear(now)),
+            (if (lang == AppLanguage.PT) "Fim do ano" else "End of year") to DateUtils.formatDate(DateUtils.endOfYear(now))
+        ).forEach { (label, value) ->
+            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+                Text(label, style = MaterialTheme.typography.bodySmall, color = ResumeColors.SecondaryText)
+                Text(value, style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Bold)
+            }
+        }
+
+        Spacer(modifier = Modifier.height(Spacing.dp8))
+        HorizontalDivider(color = ResumeColors.Divider)
+        Spacer(modifier = Modifier.height(Spacing.dp8))
+
+        // Countdown to new year
+        val dt = DateUtils.currentDateTime()
+        val newYear = DateUtils.toMillis(dt.year + 1, 1, 1)
+        Text("Countdown", style = MaterialTheme.typography.labelLarge, fontWeight = FontWeight.Bold)
+        Spacer(modifier = Modifier.height(Spacing.dp4))
+        Text(
+            if (lang == AppLanguage.PT) "Ano novo: ${DateUtils.formatCountdown(newYear)}"
+            else "New Year: ${DateUtils.formatCountdown(newYear)}",
+            style = MaterialTheme.typography.bodyMedium,
+            fontWeight = FontWeight.Bold,
+            color = ResumeColors.Primary
+        )
     }
 }
 
 @Composable
 private fun StringSection() {
     var input by remember { mutableStateOf("são paulo é incrível") }
+    var input2 by remember { mutableStateOf("contato@email.com visite https://site.com #kotlin @bryan") }
+    var inputA by remember { mutableStateOf("kotlin") }
+    var inputB by remember { mutableStateOf("koltin") }
 
     SectionCard(title = "String Utils", modifier = Modifier.padding(horizontal = Spacing.dp2)) {
-        Desc("Capitalize words, truncate text, remove accents, and generate URL slugs.", "Capitaliza palavras, trunca texto, remove acentos e gera slugs para URLs.")
+        Desc(
+            "40+ string functions: case conversion, transform, extract, analyze, mask, and similarity.",
+            "40+ funções de string: conversão de case, transformação, extração, análise, máscara e similaridade."
+        )
+
+        // Case conversion
         OutlinedTextField(
             value = input,
             onValueChange = { input = it },
@@ -348,27 +440,133 @@ private fun StringSection() {
             modifier = Modifier.fillMaxWidth(),
             singleLine = true
         )
+        Spacer(modifier = Modifier.height(Spacing.dp6))
+        Text("Case Conversion", style = MaterialTheme.typography.labelLarge, fontWeight = FontWeight.Bold)
+        Spacer(modifier = Modifier.height(Spacing.dp4))
+
+        val caseResults = listOf(
+            "Capitalize" to StringUtils.capitalize(input),
+            "camelCase" to StringUtils.toCamelCase(input),
+            "snake_case" to StringUtils.toSnakeCase(input),
+            "kebab-case" to StringUtils.toKebabCase(input),
+            "PascalCase" to StringUtils.toPascalCase(input),
+            "CONSTANT" to StringUtils.toConstantCase(input),
+            "Title Case" to StringUtils.toTitleCase(input),
+            "sWAP cASE" to StringUtils.swapCase(input)
+        )
+        caseResults.forEach { (label, result) ->
+            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+                Text(label, style = MaterialTheme.typography.bodySmall, color = ResumeColors.SecondaryText)
+                Text(result, style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Bold)
+            }
+        }
+
+        Spacer(modifier = Modifier.height(Spacing.dp8))
+        HorizontalDivider(color = ResumeColors.Divider)
         Spacer(modifier = Modifier.height(Spacing.dp8))
 
-        val results = listOf(
-            "Capitalize" to StringUtils.capitalize(input),
-            "Truncate(15)" to StringUtils.truncate(input, 15),
-            "Remove Accents" to StringUtils.removeAccents(input),
-            "Slug" to StringUtils.toSlug(input)
+        Text("Transform", style = MaterialTheme.typography.labelLarge, fontWeight = FontWeight.Bold)
+        Spacer(modifier = Modifier.height(Spacing.dp4))
+        val transformResults = listOf(
+            "Slug" to StringUtils.toSlug(input),
+            "Reverse" to StringUtils.reverse(input),
+            "No Accents" to StringUtils.removeAccents(input),
+            "Truncate(12)" to StringUtils.truncate(input, 12),
+            "Initials" to StringUtils.initials(input),
+            "Abbreviate" to StringUtils.abbreviate(input),
+            "Pad Center(25)" to StringUtils.padCenter(input, 25, '-'),
+            "Collapse WS" to StringUtils.collapseWhitespace(input)
         )
-        results.forEach { (label, result) ->
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
+        transformResults.forEach { (label, result) ->
+            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
                 Text(label, style = MaterialTheme.typography.bodySmall, color = ResumeColors.SecondaryText)
-                Text(
-                    result,
-                    style = MaterialTheme.typography.bodyMedium,
-                    fontWeight = FontWeight.Bold
-                )
+                Text(result, style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Bold)
             }
+        }
+
+        Spacer(modifier = Modifier.height(Spacing.dp8))
+        HorizontalDivider(color = ResumeColors.Divider)
+        Spacer(modifier = Modifier.height(Spacing.dp8))
+
+        Text("Analysis", style = MaterialTheme.typography.labelLarge, fontWeight = FontWeight.Bold)
+        Spacer(modifier = Modifier.height(Spacing.dp4))
+        val analysisResults = listOf(
+            "Words" to StringUtils.wordCount(input).toString(),
+            "Chars" to StringUtils.charCount(input).toString(),
+            "No spaces" to StringUtils.charCount(input, true).toString(),
+            "Vowels" to StringUtils.vowelCount(input).toString(),
+            "Consonants" to StringUtils.consonantCount(input).toString(),
+            "Palindrome?" to if (StringUtils.isPalindrome(input)) "Yes" else "No",
+            "Alpha?" to if (StringUtils.isAlpha(input)) "Yes" else "No",
+            "Numeric?" to if (StringUtils.isNumeric(input)) "Yes" else "No"
+        )
+        analysisResults.forEach { (label, result) ->
+            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+                Text(label, style = MaterialTheme.typography.bodySmall, color = ResumeColors.SecondaryText)
+                Text(result, style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Bold)
+            }
+        }
+
+        Spacer(modifier = Modifier.height(Spacing.dp8))
+        HorizontalDivider(color = ResumeColors.Divider)
+        Spacer(modifier = Modifier.height(Spacing.dp8))
+
+        // Extract
+        Text("Extract", style = MaterialTheme.typography.labelLarge, fontWeight = FontWeight.Bold)
+        Spacer(modifier = Modifier.height(Spacing.dp4))
+        OutlinedTextField(
+            value = input2,
+            onValueChange = { input2 = it },
+            label = { Text("Text with data") },
+            modifier = Modifier.fillMaxWidth(),
+            singleLine = true
+        )
+        Spacer(modifier = Modifier.height(Spacing.dp4))
+        listOf(
+            "Emails" to StringUtils.extractEmails(input2).joinToString(),
+            "URLs" to StringUtils.extractUrls(input2).joinToString(),
+            "Numbers" to StringUtils.extractNumbers(input2).joinToString(),
+            "Hashtags" to StringUtils.extractHashtags(input2).joinToString(),
+            "Mentions" to StringUtils.extractMentions(input2).joinToString()
+        ).forEach { (label, result) ->
+            Text(label, style = MaterialTheme.typography.bodySmall, color = ResumeColors.SecondaryText)
+            Text(result.ifEmpty { "---" }, style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Bold)
+        }
+
+        Spacer(modifier = Modifier.height(Spacing.dp8))
+        HorizontalDivider(color = ResumeColors.Divider)
+        Spacer(modifier = Modifier.height(Spacing.dp8))
+
+        // Mask & Similarity
+        Text("Mask & Similarity", style = MaterialTheme.typography.labelLarge, fontWeight = FontWeight.Bold)
+        Spacer(modifier = Modifier.height(Spacing.dp4))
+        Text("Mask email: ${StringUtils.maskEmail("bryanollivie@gmail.com")}", style = MaterialTheme.typography.bodyMedium)
+        Text("Mask phone: ${StringUtils.maskPhone("11971721750")}", style = MaterialTheme.typography.bodyMedium)
+        Text("Obfuscate: ${StringUtils.obfuscate("SensitiveData123")}", style = MaterialTheme.typography.bodyMedium)
+
+        Spacer(modifier = Modifier.height(Spacing.dp6))
+        Row(horizontalArrangement = Arrangement.spacedBy(Spacing.dp4)) {
+            OutlinedTextField(
+                value = inputA,
+                onValueChange = { inputA = it },
+                label = { Text("Word A") },
+                modifier = Modifier.weight(1f),
+                singleLine = true
+            )
+            OutlinedTextField(
+                value = inputB,
+                onValueChange = { inputB = it },
+                label = { Text("Word B") },
+                modifier = Modifier.weight(1f),
+                singleLine = true
+            )
+        }
+        if (inputA.isNotEmpty() && inputB.isNotEmpty()) {
             Spacer(modifier = Modifier.height(Spacing.dp4))
+            Text("Levenshtein: ${StringUtils.levenshteinDistance(inputA, inputB)}", style = MaterialTheme.typography.bodyMedium)
+            Text("Similarity: ${"%.0f".format(StringUtils.similarity(inputA, inputB) * 100)}%",
+                style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Bold,
+                color = ResumeColors.Primary)
         }
     }
 }
@@ -985,6 +1183,130 @@ private fun EventBusSection() {
             fontWeight = FontWeight.Bold,
             color = ResumeColors.Primary
         )
+    }
+}
+
+@Composable
+private fun ImageSection() {
+    val originalBitmap = imageResource(Res.drawable.profile)
+    var currentBitmap by remember { mutableStateOf(originalBitmap) }
+    var currentOperation by remember { mutableStateOf("Original") }
+
+    SectionCard(title = "Image Utils", modifier = Modifier.padding(horizontal = Spacing.dp2)) {
+        Desc(
+            "Manipulate images: resize, rotate, flip, crop, grayscale, tint. Full Android implementation via Bitmap APIs.",
+            "Manipula imagens: redimensionar, rotacionar, espelhar, recortar, escala de cinza, tint. Implementação Android completa via Bitmap APIs."
+        )
+
+        // Preview
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(180.dp)
+                .clip(RoundedCornerShape(8.dp))
+                .background(Color.Black),
+            contentAlignment = Alignment.Center
+        ) {
+            Image(
+                bitmap = currentBitmap,
+                contentDescription = "Preview",
+                contentScale = ContentScale.Fit,
+                modifier = Modifier.fillMaxSize()
+            )
+        }
+        Spacer(modifier = Modifier.height(Spacing.dp4))
+        Text(
+            text = "Operation: $currentOperation | ${currentBitmap.width}x${currentBitmap.height}",
+            style = MaterialTheme.typography.bodySmall,
+            color = ResumeColors.SecondaryText
+        )
+        Spacer(modifier = Modifier.height(Spacing.dp8))
+
+        // Action buttons
+        Row(horizontalArrangement = Arrangement.spacedBy(Spacing.dp4)) {
+            OutlinedButton(onClick = {
+                currentBitmap = originalBitmap
+                currentOperation = "Original"
+            }) { Text("Reset", fontSize = 11.sp) }
+
+            Button(
+                onClick = {
+                    currentBitmap = currentBitmap.rotate(90f)
+                    currentOperation = "Rotate 90°"
+                },
+                colors = ButtonDefaults.buttonColors(containerColor = ResumeColors.Primary)
+            ) { Text("Rotate", fontSize = 11.sp) }
+
+            Button(
+                onClick = {
+                    currentBitmap = currentBitmap.flipHorizontal()
+                    currentOperation = "Flip H"
+                },
+                colors = ButtonDefaults.buttonColors(containerColor = ResumeColors.Primary)
+            ) { Text("Flip H", fontSize = 11.sp) }
+        }
+
+        Spacer(modifier = Modifier.height(Spacing.dp4))
+
+        Row(horizontalArrangement = Arrangement.spacedBy(Spacing.dp4)) {
+            Button(
+                onClick = {
+                    currentBitmap = currentBitmap.flipVertical()
+                    currentOperation = "Flip V"
+                },
+                colors = ButtonDefaults.buttonColors(containerColor = ResumeColors.Primary)
+            ) { Text("Flip V", fontSize = 11.sp) }
+
+            Button(
+                onClick = {
+                    currentBitmap = originalBitmap.toGrayscale()
+                    currentOperation = "Grayscale"
+                },
+                colors = ButtonDefaults.buttonColors(containerColor = ResumeColors.PrimaryDark)
+            ) { Text("Gray", fontSize = 11.sp) }
+
+            Button(
+                onClick = {
+                    currentBitmap = originalBitmap.applyTint(ResumeColors.Primary, 0.4f)
+                    currentOperation = "Red Tint"
+                },
+                colors = ButtonDefaults.buttonColors(containerColor = ResumeColors.Primary)
+            ) { Text("Tint", fontSize = 11.sp) }
+        }
+
+        Spacer(modifier = Modifier.height(Spacing.dp4))
+
+        Row(horizontalArrangement = Arrangement.spacedBy(Spacing.dp4)) {
+            Button(
+                onClick = {
+                    val (w, h) = ImageUtils.fitSize(originalBitmap.width, originalBitmap.height, 200, 200)
+                    currentBitmap = originalBitmap.resize(w, h)
+                    currentOperation = "Resize ${w}x${h}"
+                },
+                colors = ButtonDefaults.buttonColors(containerColor = ResumeColors.Accent)
+            ) { Text("Resize 200", fontSize = 11.sp) }
+
+            Button(
+                onClick = {
+                    val size = minOf(originalBitmap.width, originalBitmap.height)
+                    val x = (originalBitmap.width - size) / 2
+                    val y = (originalBitmap.height - size) / 2
+                    currentBitmap = originalBitmap.crop(x, y, size, size)
+                    currentOperation = "Crop Center"
+                },
+                colors = ButtonDefaults.buttonColors(containerColor = ResumeColors.Accent)
+            ) { Text("Crop", fontSize = 11.sp) }
+        }
+
+        Spacer(modifier = Modifier.height(Spacing.dp8))
+
+        // Size info
+        val estimatedPng = ImageUtils.estimateFileSize(currentBitmap.width, currentBitmap.height, ImageFormat.PNG)
+        val estimatedJpg = ImageUtils.estimateFileSize(currentBitmap.width, currentBitmap.height, ImageFormat.JPEG)
+        Text("Est. PNG: ${ImageUtils.formatFileSize(estimatedPng)} | JPEG: ${ImageUtils.formatFileSize(estimatedJpg)}",
+            style = MaterialTheme.typography.bodySmall, color = ResumeColors.SecondaryText)
+        Text("Aspect Ratio: ${"%.2f".format(ImageUtils.aspectRatio(currentBitmap.width, currentBitmap.height))}",
+            style = MaterialTheme.typography.bodySmall, color = ResumeColors.SecondaryText)
     }
 }
 

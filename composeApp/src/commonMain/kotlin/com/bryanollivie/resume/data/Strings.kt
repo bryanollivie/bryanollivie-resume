@@ -7,6 +7,7 @@ data class AppStrings(
     val tabSummary: String,
     val tabWorkHistory: String,
     val tabCertifications: String,
+    val tabUtils: String,
     // Section titles
     val summary: String,
     val languages: String,
@@ -71,6 +72,7 @@ object Strings {
         tabSummary = "Summary",
         tabWorkHistory = "Work History",
         tabCertifications = "Certifications",
+        tabUtils = "Utils",
         summary = "Summary",
         languages = "Languages",
         education = "Education",
@@ -160,6 +162,7 @@ object Strings {
         tabSummary = "Resumo",
         tabWorkHistory = "Experiência",
         tabCertifications = "Certificações",
+        tabUtils = "Utils",
         summary = "Resumo",
         languages = "Idiomas",
         education = "Formação",
