@@ -303,6 +303,14 @@ private fun DateSection(lang: AppLanguage) {
         // Format
         Text("Format", style = MaterialTheme.typography.labelLarge, fontWeight = FontWeight.Bold)
         Spacer(modifier = Modifier.height(Spacing.dp4))
+        Text(
+            DateUtils.formatDateLong(now, langStr),
+            style = MaterialTheme.typography.titleLarge,
+            fontWeight = FontWeight.Bold,
+            color = ResumeColors.Primary
+        )
+        Spacer(modifier = Modifier.height(Spacing.dp8))
+
         val patterns = listOf(
             "dd/MM/yyyy", "yyyy-MM-dd", "dd/MM/yyyy HH:mm:ss",
             "EEEE, dd MMMM yyyy", "EEE dd MMM", "hh:mm a"
@@ -404,17 +412,71 @@ private fun DateSection(lang: AppLanguage) {
         HorizontalDivider(color = ResumeColors.Divider)
         Spacer(modifier = Modifier.height(Spacing.dp8))
 
-        // Countdown to new year
+        // Checks
+        Text("Checks", style = MaterialTheme.typography.labelLarge, fontWeight = FontWeight.Bold)
+        Spacer(modifier = Modifier.height(Spacing.dp4))
+        val yesterday = DateUtils.addDays(now, -1)
+        val tomorrow = DateUtils.addDays(now, 1)
+        listOf(
+            "isToday(now)" to DateUtils.isToday(now).toString(),
+            "isYesterday(-1d)" to DateUtils.isYesterday(yesterday).toString(),
+            "isTomorrow(+1d)" to DateUtils.isTomorrow(tomorrow).toString(),
+            "isFuture(+1d)" to DateUtils.isFuture(tomorrow).toString(),
+            "isPast(-1d)" to DateUtils.isPast(yesterday).toString(),
+            "isWeekend(now)" to DateUtils.isWeekend(now).toString()
+        ).forEach { (label, value) ->
+            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+                Text(label, style = MaterialTheme.typography.bodySmall, color = ResumeColors.SecondaryText)
+                Text(value, style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Bold,
+                    color = if (value == "true") ResumeColors.Accent else ResumeColors.Primary)
+            }
+        }
+
+        Spacer(modifier = Modifier.height(Spacing.dp8))
+        HorizontalDivider(color = ResumeColors.Divider)
+        Spacer(modifier = Modifier.height(Spacing.dp8))
+
+        // Diff
+        Text("Difference", style = MaterialTheme.typography.labelLarge, fontWeight = FontWeight.Bold)
+        Spacer(modifier = Modifier.height(Spacing.dp4))
+        val birthDate = DateUtils.toMillis(1993, 1, 1)
+        val christmas = DateUtils.toMillis(DateUtils.currentDateTime().year, 12, 25)
+        listOf(
+            (if (lang == AppLanguage.PT) "Idade (01/01/1993)" else "Age (01/01/1993)") to "${DateUtils.age(birthDate)} ${if (lang == AppLanguage.PT) "anos" else "years"}",
+            (if (lang == AppLanguage.PT) "Dias até Natal" else "Days to Christmas") to "${DateUtils.diffInDays(now, christmas)} ${if (lang == AppLanguage.PT) "dias" else "days"}",
+            (if (lang == AppLanguage.PT) "Horas até Natal" else "Hours to Christmas") to "${DateUtils.diffInHours(now, christmas)} h",
+            (if (lang == AppLanguage.PT) "Minutos hoje" else "Minutes today") to "${DateUtils.diffInMinutes(DateUtils.startOfDay(now), now)} min",
+            (if (lang == AppLanguage.PT) "Segundos hoje" else "Seconds today") to "${DateUtils.diffInSeconds(DateUtils.startOfDay(now), now)} s"
+        ).forEach { (label, value) ->
+            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+                Text(label, style = MaterialTheme.typography.bodySmall, color = ResumeColors.SecondaryText)
+                Text(value, style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Bold)
+            }
+        }
+
+        Spacer(modifier = Modifier.height(Spacing.dp8))
+        HorizontalDivider(color = ResumeColors.Divider)
+        Spacer(modifier = Modifier.height(Spacing.dp8))
+
+        // Countdown
         val dt = DateUtils.currentDateTime()
         val newYear = DateUtils.toMillis(dt.year + 1, 1, 1)
         Text("Countdown", style = MaterialTheme.typography.labelLarge, fontWeight = FontWeight.Bold)
         Spacer(modifier = Modifier.height(Spacing.dp4))
+        val cd = DateUtils.countdown(newYear)
         Text(
-            if (lang == AppLanguage.PT) "Ano novo: ${DateUtils.formatCountdown(newYear)}"
-            else "New Year: ${DateUtils.formatCountdown(newYear)}",
+            if (lang == AppLanguage.PT) "Ano Novo: ${cd.days}d ${cd.hours}h ${cd.minutes}m ${cd.seconds}s"
+            else "New Year: ${cd.days}d ${cd.hours}h ${cd.minutes}m ${cd.seconds}s",
             style = MaterialTheme.typography.bodyMedium,
             fontWeight = FontWeight.Bold,
             color = ResumeColors.Primary
+        )
+        Text(
+            if (lang == AppLanguage.PT) "Natal: ${DateUtils.formatCountdown(christmas)}"
+            else "Christmas: ${DateUtils.formatCountdown(christmas)}",
+            style = MaterialTheme.typography.bodyMedium,
+            fontWeight = FontWeight.Bold,
+            color = ResumeColors.Accent
         )
     }
 }
@@ -564,7 +626,7 @@ private fun StringSection() {
         if (inputA.isNotEmpty() && inputB.isNotEmpty()) {
             Spacer(modifier = Modifier.height(Spacing.dp4))
             Text("Levenshtein: ${StringUtils.levenshteinDistance(inputA, inputB)}", style = MaterialTheme.typography.bodyMedium)
-            Text("Similarity: ${"%.0f".format(StringUtils.similarity(inputA, inputB) * 100)}%",
+            Text("Similarity: ${(StringUtils.similarity(inputA, inputB) * 100).toLong()}%",
                 style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Bold,
                 color = ResumeColors.Primary)
         }
@@ -789,7 +851,7 @@ private fun ColorSection() {
             }
             Spacer(modifier = Modifier.height(Spacing.dp8))
             Text("RGB: ${ColorUtils.toRgbString(color)}", style = MaterialTheme.typography.bodyMedium)
-            Text("Contrast vs White: ${"%.2f".format(contrast)}:1", style = MaterialTheme.typography.bodyMedium)
+            Text("Contrast vs White: ${((contrast * 100).toLong() / 100.0)}:1", style = MaterialTheme.typography.bodyMedium)
             Text(
                 "WCAG AA: ${if (accessible) "Pass" else "Fail"}",
                 style = MaterialTheme.typography.bodyMedium,
@@ -1305,7 +1367,7 @@ private fun ImageSection() {
         val estimatedJpg = ImageUtils.estimateFileSize(currentBitmap.width, currentBitmap.height, ImageFormat.JPEG)
         Text("Est. PNG: ${ImageUtils.formatFileSize(estimatedPng)} | JPEG: ${ImageUtils.formatFileSize(estimatedJpg)}",
             style = MaterialTheme.typography.bodySmall, color = ResumeColors.SecondaryText)
-        Text("Aspect Ratio: ${"%.2f".format(ImageUtils.aspectRatio(currentBitmap.width, currentBitmap.height))}",
+        Text("Aspect Ratio: ${((ImageUtils.aspectRatio(currentBitmap.width, currentBitmap.height) * 100).toLong() / 100.0)}",
             style = MaterialTheme.typography.bodySmall, color = ResumeColors.SecondaryText)
     }
 }
