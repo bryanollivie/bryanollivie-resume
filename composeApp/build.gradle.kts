@@ -60,6 +60,8 @@ kotlin {
             implementation(libs.navigation.compose)
             implementation(libs.compottie)
             implementation(libs.compottie.resources)
+            implementation(libs.kotlinx.datetime)
+            implementation("com.bryanollivie.kmputils:kmputils")
         }
     }
 }

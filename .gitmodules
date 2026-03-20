@@ -1,0 +1,3 @@
+[submodule "kmputils"]
+	path = kmputils
+	url = https://github.com/bryanollivie/kmputils.git

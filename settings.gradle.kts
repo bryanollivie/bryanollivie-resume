@@ -30,4 +30,5 @@ dependencyResolutionManagement {
     }
 }
 
+includeBuild("kmputils")
 include(":composeApp")
