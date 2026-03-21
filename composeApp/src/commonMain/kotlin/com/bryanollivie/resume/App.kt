@@ -154,10 +154,16 @@ private fun SplashScreen(onFinished: () -> Unit) {
     val nameAlpha = remember { Animatable(0f) }
     val titleAlpha = remember { Animatable(0f) }
 
-    val splashComposition by rememberLottieComposition {
-        LottieCompositionSpec.JsonString(
+    var splashJson by remember { mutableStateOf<String?>(null) }
+    LaunchedEffect(Unit) {
+        splashJson = try {
             Res.readBytes("files/splash.json").decodeToString()
-        )
+        } catch (_: Exception) { null }
+    }
+
+    val splashComposition by rememberLottieComposition {
+        splashJson?.let { LottieCompositionSpec.JsonString(it) }
+            ?: LottieCompositionSpec.JsonString("{}")
     }
     val splashProgress by animateLottieCompositionAsState(
         splashComposition,
@@ -168,7 +174,7 @@ private fun SplashScreen(onFinished: () -> Unit) {
         avatarScale.animateTo(1f, animationSpec = tween(600, easing = FastOutSlowInEasing))
         nameAlpha.animateTo(1f, animationSpec = tween(400))
         titleAlpha.animateTo(1f, animationSpec = tween(400))
-        delay(2500)
+        delay(1500)
         onFinished()
     }
 

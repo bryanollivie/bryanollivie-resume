@@ -10,6 +10,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.bryanollivie.resume.designsystem.tokens.ResumeColors
@@ -29,38 +30,46 @@ fun TransparentTabBar(
     selectedColor: Color = ResumeColors.Primary,
     unselectedColor: Color = Color.Gray
 ) {
-    Row(
+    val bottomInset = WindowInsets.safeDrawing.asPaddingValues().calculateBottomPadding()
+
+    Column(
         modifier = modifier
             .fillMaxWidth()
-            .height(56.dp)
-            .background(backgroundColor),
-        horizontalArrangement = Arrangement.SpaceEvenly,
-        verticalAlignment = Alignment.CenterVertically
+            .background(backgroundColor)
     ) {
-        tabs.forEachIndexed { index, tab ->
-            val isSelected = selectedIndex == index
-            val color = if (isSelected) selectedColor else unselectedColor
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(48.dp),
+            horizontalArrangement = Arrangement.SpaceEvenly,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            tabs.forEachIndexed { index, tab ->
+                val isSelected = selectedIndex == index
+                val color = if (isSelected) selectedColor else unselectedColor
 
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier
-                    .weight(1f)
-                    .clickable { onTabSelected(index) }
-                    .padding(vertical = 6.dp)
-            ) {
-                Icon(
-                    tab.icon,
-                    contentDescription = tab.title,
-                    modifier = Modifier.size(20.dp),
-                    tint = color
-                )
-                Spacer(modifier = Modifier.height(2.dp))
-                Text(
-                    tab.title,
-                    fontSize = 11.sp,
-                    color = color
-                )
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier
+                        .weight(1f)
+                        .clickable { onTabSelected(index) }
+                        .padding(vertical = 4.dp)
+                ) {
+                    Icon(
+                        tab.icon,
+                        contentDescription = tab.title,
+                        modifier = Modifier.size(20.dp),
+                        tint = color
+                    )
+                    Spacer(modifier = Modifier.height(2.dp))
+                    Text(
+                        tab.title,
+                        fontSize = 11.sp,
+                        color = color
+                    )
+                }
             }
         }
+        Spacer(modifier = Modifier.height(bottomInset))
     }
 }

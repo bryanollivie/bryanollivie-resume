@@ -24,7 +24,7 @@ fun SummaryEducationScreen() {
 
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
-        contentPadding = PaddingValues(bottom = 56.dp),
+        contentPadding = PaddingValues(bottom = 80.dp),
         verticalArrangement = Arrangement.spacedBy(Spacing.dp8)
     ) {
         // Header full-width
@@ -135,9 +135,7 @@ fun SummaryEducationScreen() {
         item {
             SectionCard(
                 title = strings.education,
-                modifier = Modifier
-                    .padding(horizontal = Spacing.dp16)
-                    .padding(bottom = Spacing.dp8)
+                modifier = Modifier.padding(horizontal = Spacing.dp6)
             ) {
                 Column(verticalArrangement = Arrangement.spacedBy(Spacing.dp16)) {
                     strings.educationList.forEach { edu ->
