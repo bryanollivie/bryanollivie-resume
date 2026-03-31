@@ -1,0 +1,353 @@
+{
+  "version": 1,
+  "title": "Server Driven UI Demo",
+  "backgroundColor": "#1A1A1A",
+  "components": [
+    {
+      "type": "text",
+      "text": "🚀 Server Driven Compose",
+      "size": 28,
+      "fontWeight": "bold",
+      "color": "#FFFFFF",
+      "textAlign": "center"
+    },
+    {
+      "type": "spacer",
+      "height": 8
+    },
+    {
+      "type": "text",
+      "text": "Esta tela é renderizada dinamicamente a partir de um JSON — sem recompilar o app!",
+      "size": 14,
+      "fontWeight": "normal",
+      "color": "#AAAAAA",
+      "textAlign": "center"
+    },
+    {
+      "type": "spacer",
+      "height": 16
+    },
+    {
+      "type": "card",
+      "padding": 16,
+      "elevation": 8,
+      "children": [
+        {
+          "type": "text",
+          "text": "📱 Sobre o Projeto",
+          "size": 20,
+          "fontWeight": "bold",
+          "color": "#FF3B30"
+        },
+        {
+          "type": "spacer",
+          "height": 8
+        },
+        {
+          "type": "text",
+          "text": "Este é um exemplo de Server-Driven UI usando Compose Multiplatform. Os componentes são definidos no backend (JSON) e renderizados nativamente pelo cliente.",
+          "size": 14,
+          "color": "#DDDDDD"
+        },
+        {
+          "type": "spacer",
+          "height": 12
+        },
+        {
+          "type": "row",
+          "spacing": 12,
+          "alignment": "center",
+          "children": [
+            {
+              "type": "button",
+              "text": "Saiba Mais",
+              "style": "filled"
+            },
+            {
+              "type": "button",
+              "text": "GitHub",
+              "style": "outlined"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "spacer",
+      "height": 16
+    },
+    {
+      "type": "card",
+      "padding": 16,
+      "elevation": 4,
+      "children": [
+        {
+          "type": "text",
+          "text": "⚡ Tecnologias",
+          "size": 20,
+          "fontWeight": "bold",
+          "color": "#FF3B30"
+        },
+        {
+          "type": "spacer",
+          "height": 12
+        },
+        {
+          "type": "list",
+          "layout": "column",
+          "spacing": 8,
+          "items": [
+            {
+              "type": "row",
+              "spacing": 12,
+              "children": [
+                {
+                  "type": "text",
+                  "text": "🟣",
+                  "size": 18
+                },
+                {
+                  "type": "column",
+                  "spacing": 2,
+                  "children": [
+                    {
+                      "type": "text",
+                      "text": "Kotlin Multiplatform",
+                      "size": 16,
+                      "fontWeight": "bold",
+                      "color": "#FFFFFF"
+                    },
+                    {
+                      "type": "text",
+                      "text": "Compartilhe lógica entre Android, iOS e Web",
+                      "size": 12,
+                      "color": "#999999"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "divider",
+              "thickness": 1,
+              "color": "#333333"
+            },
+            {
+              "type": "row",
+              "spacing": 12,
+              "children": [
+                {
+                  "type": "text",
+                  "text": "🎨",
+                  "size": 18
+                },
+                {
+                  "type": "column",
+                  "spacing": 2,
+                  "children": [
+                    {
+                      "type": "text",
+                      "text": "Jetpack Compose",
+                      "size": 16,
+                      "fontWeight": "bold",
+                      "color": "#FFFFFF"
+                    },
+                    {
+                      "type": "text",
+                      "text": "UI declarativa e reativa",
+                      "size": 12,
+                      "color": "#999999"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "divider",
+              "thickness": 1,
+              "color": "#333333"
+            },
+            {
+              "type": "row",
+              "spacing": 12,
+              "children": [
+                {
+                  "type": "text",
+                  "text": "📡",
+                  "size": 18
+                },
+                {
+                  "type": "column",
+                  "spacing": 2,
+                  "children": [
+                    {
+                      "type": "text",
+                      "text": "Server-Driven UI",
+                      "size": 16,
+                      "fontWeight": "bold",
+                      "color": "#FFFFFF"
+                    },
+                    {
+                      "type": "text",
+                      "text": "Atualize a UI sem novo release",
+                      "size": 12,
+                      "color": "#999999"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "divider",
+              "thickness": 1,
+              "color": "#333333"
+            },
+            {
+              "type": "row",
+              "spacing": 12,
+              "children": [
+                {
+                  "type": "text",
+                  "text": "🔥",
+                  "size": 18
+                },
+                {
+                  "type": "column",
+                  "spacing": 2,
+                  "children": [
+                    {
+                      "type": "text",
+                      "text": "Firebase / Remote Config",
+                      "size": 16,
+                      "fontWeight": "bold",
+                      "color": "#FFFFFF"
+                    },
+                    {
+                      "type": "text",
+                      "text": "Backend para entregar o JSON dinamicamente",
+                      "size": 12,
+                      "color": "#999999"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "spacer",
+      "height": 16
+    },
+    {
+      "type": "card",
+      "padding": 16,
+      "elevation": 4,
+      "children": [
+        {
+          "type": "text",
+          "text": "📊 Como Funciona",
+          "size": 20,
+          "fontWeight": "bold",
+          "color": "#FF3B30"
+        },
+        {
+          "type": "spacer",
+          "height": 12
+        },
+        {
+          "type": "row",
+          "spacing": 8,
+          "alignment": "center",
+          "children": [
+            {
+              "type": "column",
+              "spacing": 4,
+              "children": [
+                {
+                  "type": "text",
+                  "text": "Backend",
+                  "size": 12,
+                  "fontWeight": "bold",
+                  "color": "#FF3B30",
+                  "textAlign": "center"
+                },
+                {
+                  "type": "text",
+                  "text": "{ JSON }",
+                  "size": 24,
+                  "color": "#FFFFFF",
+                  "textAlign": "center"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "text": "→",
+              "size": 24,
+              "color": "#FF3B30"
+            },
+            {
+              "type": "column",
+              "spacing": 4,
+              "children": [
+                {
+                  "type": "text",
+                  "text": "Parser",
+                  "size": 12,
+                  "fontWeight": "bold",
+                  "color": "#FF3B30",
+                  "textAlign": "center"
+                },
+                {
+                  "type": "text",
+                  "text": "⚙️",
+                  "size": 24,
+                  "textAlign": "center"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "text": "→",
+              "size": 24,
+              "color": "#FF3B30"
+            },
+            {
+              "type": "column",
+              "spacing": 4,
+              "children": [
+                {
+                  "type": "text",
+                  "text": "Compose",
+                  "size": 12,
+                  "fontWeight": "bold",
+                  "color": "#FF3B30",
+                  "textAlign": "center"
+                },
+                {
+                  "type": "text",
+                  "text": "📱",
+                  "size": 24,
+                  "textAlign": "center"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "spacer",
+      "height": 16
+    },
+    {
+      "type": "text",
+      "text": "v1.0 • Powered by Compose Multiplatform",
+      "size": 12,
+      "color": "#666666",
+      "textAlign": "center"
+    }
+  ]
+}

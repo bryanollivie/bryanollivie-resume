@@ -45,6 +45,7 @@ import com.bryanollivie.resume.ui.SummaryEducationScreen
 import com.bryanollivie.resume.ui.TrainingCertificationScreen
 import com.bryanollivie.resume.ui.UtilsDemoScreen
 import com.bryanollivie.resume.ui.WorkHistoryScreen
+import com.bryanollivie.resume.serverdriven.ServerDrivenScreen
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -87,7 +88,8 @@ private fun MainContent() {
             TabItem(strings.tabSummary, Icons.Default.Person),
             TabItem(strings.tabWorkHistory, Icons.Default.DateRange),
             TabItem(strings.tabCertifications, Icons.Default.Star),
-            TabItem(strings.tabUtils, Icons.Default.Build)
+            TabItem(strings.tabUtils, Icons.Default.Build),
+            TabItem(strings.tabServerDriven, Icons.Default.Refresh)
         )
 
         ModalNavigationDrawer(
@@ -134,6 +136,7 @@ private fun MainContent() {
                         1 -> WorkHistoryScreen()
                         2 -> TrainingCertificationScreen()
                         3 -> UtilsDemoScreen()
+                        4 -> ServerDrivenScreen()
                     }
 
                     TransparentTabBar(
