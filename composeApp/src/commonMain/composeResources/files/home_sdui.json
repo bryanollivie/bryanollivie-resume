@@ -1,0 +1,354 @@
+{
+  "version": 1,
+  "title": "Home",
+  "backgroundColor": "#FAFAFA",
+  "components": [
+    {
+      "type": "box",
+      "backgroundColor": "#000000",
+      "horizontalPadding": 16,
+      "verticalPadding": 16,
+      "alignment": "center",
+      "children": [
+        {
+          "type": "avatar",
+          "size": 90
+        },
+        {
+          "type": "spacer",
+          "height": 8
+        },
+        {
+          "type": "text",
+          "text": "Bryan Ollivie Cunha de Souza",
+          "size": 22,
+          "fontWeight": "bold",
+          "color": "#FFFFFF",
+          "textAlign": "center"
+        },
+        {
+          "type": "spacer",
+          "height": 4
+        },
+        {
+          "type": "text",
+          "text": "SOFTWARE ENGINEER",
+          "size": 14,
+          "fontWeight": "bold",
+          "color": "#D32F2F",
+          "textAlign": "center"
+        },
+        {
+          "type": "spacer",
+          "height": 6
+        },
+        {
+          "type": "text",
+          "text": "São Paulo - SP, Brazil",
+          "size": 12,
+          "color": "#B3FFFFFF",
+          "textAlign": "center"
+        },
+        {
+          "type": "text",
+          "text": "bryanollivie@gmail.com | +5511971721750",
+          "size": 12,
+          "color": "#B3FFFFFF",
+          "textAlign": "center"
+        },
+        {
+          "type": "spacer",
+          "height": 10
+        },
+        {
+          "type": "row",
+          "spacing": 12,
+          "alignment": "center",
+          "children": [
+            {
+              "type": "lottie_button",
+              "animationFile": "linkedin.json",
+              "size": 40,
+              "action": {
+                "actionType": "open_url",
+                "destination": "https://www.linkedin.com/in/bryanollivie/"
+              }
+            },
+            {
+              "type": "lottie_button",
+              "animationFile": "whatsapp.json",
+              "size": 40,
+              "action": {
+                "actionType": "open_url",
+                "destination": "https://wa.me/5511971721750"
+              }
+            },
+            {
+              "type": "lottie_button",
+              "animationFile": "email.json",
+              "size": 49,
+              "action": {
+                "actionType": "open_url",
+                "destination": "mailto:bryanollivie@gmail.com"
+              }
+            },
+            {
+              "type": "lottie_button",
+              "animationFile": "share.json",
+              "size": 40,
+              "action": {
+                "actionType": "share",
+                "destination": "Bryan Ollivie Cunha de Souza - SOFTWARE ENGINEER\nbryanollivie@gmail.com\n+5511971721750\nhttps://www.linkedin.com/in/bryanollivie/"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "section_card",
+      "title": "Summary",
+      "children": [
+        {
+          "type": "text",
+          "text": "Software Engineer with 10+ years of experience in mobile development (Android, iOS, multiplatform) and backend systems, delivering apps used by over 10 million users in fintech, banking, and technology industries.\n\nHas expertise in Kotlin, Java, Swift, Flutter, React Native, and Kotlin Multiplatform (KMP), with strong command of Clean Architecture, MVVM, CI/CD, RESTful APIs, and cloud integrations (AWS, Azure).\n\nExperience with AI and LLMs for code analysis, automated testing, and performance optimization, achieving 25% fewer production bugs and 40% faster delivery cycles. Hands-on expertise in DevOps practices with Docker, Kubernetes, GitHub Actions, and Azure DevOps, ensuring scalable architectures and efficient automation pipelines.\n\nRecognized for technical leadership, clear communication, problem-solving, agile collaboration, and adaptability in high-pressure environments.",
+          "size": 14,
+          "color": "#333333"
+        }
+      ]
+    },
+    {
+      "type": "section_card",
+      "title": "Languages",
+      "children": [
+        {
+          "type": "column",
+          "spacing": 12,
+          "children": [
+            {
+              "type": "row",
+              "spacing": 8,
+              "children": [
+                {
+                  "type": "text",
+                  "text": "Portuguese",
+                  "size": 16,
+                  "fontWeight": "semibold",
+                  "color": "#212121"
+                },
+                {
+                  "type": "text",
+                  "text": "Native or Bilingual",
+                  "size": 14,
+                  "color": "#666666",
+                  "textAlign": "end"
+                }
+              ]
+            },
+            {
+              "type": "row",
+              "spacing": 8,
+              "children": [
+                {
+                  "type": "text",
+                  "text": "English",
+                  "size": 16,
+                  "fontWeight": "semibold",
+                  "color": "#212121"
+                },
+                {
+                  "type": "text",
+                  "text": "Advanced",
+                  "size": 14,
+                  "color": "#666666",
+                  "textAlign": "end"
+                }
+              ]
+            },
+            {
+              "type": "row",
+              "spacing": 8,
+              "children": [
+                {
+                  "type": "text",
+                  "text": "Spanish",
+                  "size": 16,
+                  "fontWeight": "semibold",
+                  "color": "#212121"
+                },
+                {
+                  "type": "text",
+                  "text": "Advanced",
+                  "size": 14,
+                  "color": "#666666",
+                  "textAlign": "end"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "section_card",
+      "title": "Education",
+      "children": [
+        {
+          "type": "column",
+          "spacing": 16,
+          "children": [
+            {
+              "type": "row",
+              "spacing": 12,
+              "children": [
+                {
+                  "type": "badge",
+                  "text": "2026"
+                },
+                {
+                  "type": "column",
+                  "spacing": 2,
+                  "children": [
+                    {
+                      "type": "text",
+                      "text": "Postgraduate degree in Applied Java Engineering",
+                      "size": 16,
+                      "fontWeight": "semibold",
+                      "color": "#212121"
+                    },
+                    {
+                      "type": "text",
+                      "text": "Anhanguera - Brazil",
+                      "size": 12,
+                      "color": "#666666"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "row",
+              "spacing": 12,
+              "children": [
+                {
+                  "type": "badge",
+                  "text": "2021"
+                },
+                {
+                  "type": "column",
+                  "spacing": 2,
+                  "children": [
+                    {
+                      "type": "text",
+                      "text": "MBA in Solution Architecture",
+                      "size": 16,
+                      "fontWeight": "semibold",
+                      "color": "#212121"
+                    },
+                    {
+                      "type": "text",
+                      "text": "Fiap - Brazil",
+                      "size": 12,
+                      "color": "#666666"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "row",
+              "spacing": 12,
+              "children": [
+                {
+                  "type": "badge",
+                  "text": "2014"
+                },
+                {
+                  "type": "column",
+                  "spacing": 2,
+                  "children": [
+                    {
+                      "type": "text",
+                      "text": "Android Engineer",
+                      "size": 16,
+                      "fontWeight": "semibold",
+                      "color": "#212121"
+                    },
+                    {
+                      "type": "text",
+                      "text": "Institute of Interactive Arts (IAI) - Brazil",
+                      "size": 12,
+                      "color": "#666666"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "row",
+              "spacing": 12,
+              "children": [
+                {
+                  "type": "badge",
+                  "text": "2013"
+                },
+                {
+                  "type": "column",
+                  "spacing": 2,
+                  "children": [
+                    {
+                      "type": "text",
+                      "text": "Linux LPI-101",
+                      "size": 16,
+                      "fontWeight": "semibold",
+                      "color": "#212121"
+                    },
+                    {
+                      "type": "text",
+                      "text": "Jambu Tech. Engineering - Brazil",
+                      "size": 12,
+                      "color": "#666666"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "row",
+              "spacing": 12,
+              "children": [
+                {
+                  "type": "badge",
+                  "text": "2013"
+                },
+                {
+                  "type": "column",
+                  "spacing": 2,
+                  "children": [
+                    {
+                      "type": "text",
+                      "text": "Bachelor's in Computer Science",
+                      "size": 16,
+                      "fontWeight": "semibold",
+                      "color": "#212121"
+                    },
+                    {
+                      "type": "text",
+                      "text": "University Center of Pará - Brazil",
+                      "size": 12,
+                      "color": "#666666"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "spacer",
+      "height": 80
+    }
+  ]
+}

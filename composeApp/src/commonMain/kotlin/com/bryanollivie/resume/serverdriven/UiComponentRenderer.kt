@@ -14,6 +14,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.bryanollivie.resume.designsystem.components.AnimatedLottieButton
+import com.bryanollivie.resume.designsystem.components.DateBadge
+import com.bryanollivie.resume.designsystem.components.ProfileAvatar
+import com.bryanollivie.resume.designsystem.components.SectionCard
 import com.bryanollivie.resume.serverdriven.model.*
 
 @Composable
@@ -32,6 +36,11 @@ fun RenderUiComponent(
         is SpacerUi -> Spacer(modifier = Modifier.height(component.height.dp))
         is ListUi -> RenderList(component, modifier, onAction)
         is DividerUi -> RenderDivider(component, modifier)
+        is AvatarUi -> RenderAvatar(component, modifier)
+        is LottieButtonUi -> RenderLottieButton(component, modifier, onAction)
+        is BadgeUi -> RenderBadge(component, modifier)
+        is SectionCardUi -> RenderSectionCard(component, modifier, onAction)
+        is BoxUi -> RenderBox(component, modifier, onAction)
     }
 }
 
@@ -211,6 +220,81 @@ private fun RenderDivider(dividerUi: DividerUi, modifier: Modifier = Modifier) {
         thickness = dividerUi.thickness.dp,
         color = dividerUi.color.toColor(Color(0xFFCCCCCC))
     )
+}
+
+@Composable
+private fun RenderAvatar(avatarUi: AvatarUi, modifier: Modifier = Modifier) {
+    ProfileAvatar(
+        size = avatarUi.size.dp,
+        modifier = modifier
+    )
+}
+
+@Composable
+private fun RenderLottieButton(
+    lottieButtonUi: LottieButtonUi,
+    modifier: Modifier = Modifier,
+    onAction: (ActionUi) -> Unit
+) {
+    AnimatedLottieButton(
+        animationFile = lottieButtonUi.animationFile,
+        size = lottieButtonUi.size.dp,
+        onClick = { lottieButtonUi.action?.let(onAction) }
+    )
+}
+
+@Composable
+private fun RenderBadge(badgeUi: BadgeUi, modifier: Modifier = Modifier) {
+    DateBadge(
+        text = badgeUi.text,
+        modifier = modifier
+    )
+}
+
+@Composable
+private fun RenderSectionCard(
+    sectionCardUi: SectionCardUi,
+    modifier: Modifier = Modifier,
+    onAction: (ActionUi) -> Unit
+) {
+    SectionCard(
+        title = sectionCardUi.title,
+        modifier = modifier.padding(horizontal = 6.dp)
+    ) {
+        sectionCardUi.children.forEach { child ->
+            RenderUiComponent(child, onAction = onAction)
+        }
+    }
+}
+
+@Composable
+private fun RenderBox(
+    boxUi: BoxUi,
+    modifier: Modifier = Modifier,
+    onAction: (ActionUi) -> Unit
+) {
+    Column(
+        modifier = modifier
+            .then(if (boxUi.fillWidth) Modifier.fillMaxWidth() else Modifier)
+            .then(
+                if (boxUi.backgroundColor.isNotBlank())
+                    Modifier.background(boxUi.backgroundColor.toColor(Color.Transparent))
+                else Modifier
+            )
+            .padding(
+                horizontal = (if (boxUi.horizontalPadding > 0) boxUi.horizontalPadding else boxUi.padding).dp,
+                vertical = (if (boxUi.verticalPadding > 0) boxUi.verticalPadding else boxUi.padding).dp
+            ),
+        horizontalAlignment = when (boxUi.alignment) {
+            "center" -> Alignment.CenterHorizontally
+            "end" -> Alignment.End
+            else -> Alignment.Start
+        }
+    ) {
+        boxUi.children.forEach { child ->
+            RenderUiComponent(child, onAction = onAction)
+        }
+    }
 }
 
 // --- Extension helpers ---

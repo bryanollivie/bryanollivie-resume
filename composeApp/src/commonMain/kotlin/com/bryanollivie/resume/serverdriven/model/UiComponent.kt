@@ -94,6 +94,52 @@ data class DividerUi(
 
 @Immutable
 @Serializable
+@SerialName("avatar")
+data class AvatarUi(
+    val size: Int = 90
+) : UiComponent
+
+@Immutable
+@Serializable
+@SerialName("lottie_button")
+data class LottieButtonUi(
+    val animationFile: String,
+    val size: Int = 40,
+    val action: ActionUi? = null
+) : UiComponent
+
+@Immutable
+@Serializable
+@SerialName("badge")
+data class BadgeUi(
+    val text: String,
+    val backgroundColor: String = "#D32F2F",
+    val textColor: String = "#FFFFFF"
+) : UiComponent
+
+@Immutable
+@Serializable
+@SerialName("section_card")
+data class SectionCardUi(
+    val title: String,
+    val children: List<UiComponent> = emptyList()
+) : UiComponent
+
+@Immutable
+@Serializable
+@SerialName("box")
+data class BoxUi(
+    val backgroundColor: String = "",
+    val padding: Int = 0,
+    val horizontalPadding: Int = 0,
+    val verticalPadding: Int = 0,
+    val alignment: String = "center",
+    val fillWidth: Boolean = true,
+    val children: List<UiComponent> = emptyList()
+) : UiComponent
+
+@Immutable
+@Serializable
 data class SizeUi(
     val width: Int = 0,
     val height: Int = 0

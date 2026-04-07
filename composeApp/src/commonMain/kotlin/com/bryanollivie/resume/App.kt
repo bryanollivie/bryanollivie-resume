@@ -132,11 +132,14 @@ private fun MainContent() {
             ) { innerPadding ->
                 Box(modifier = Modifier.fillMaxSize().padding(top = innerPadding.calculateTopPadding())) {
                     when (selectedTab) {
-                        0 -> SummaryEducationScreen()
+                        0 -> ServerDrivenScreen(
+                            remoteUrl = "https://gist.githubusercontent.com/bryanollivie/b16451c24126f597137d58a504d836da/raw/home_sdui.json",
+                            localFallback = "home_sdui.json"
+                        )
                         1 -> WorkHistoryScreen()
                         2 -> TrainingCertificationScreen()
                         3 -> UtilsDemoScreen()
-                        4 -> ServerDrivenScreen()
+                        4 -> ServerDrivenScreen(localFallback = "server_driven_ui.json")
                     }
 
                     TransparentTabBar(
